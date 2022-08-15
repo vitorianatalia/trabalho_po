@@ -1,4 +1,4 @@
-Componente,Unidade,Exigencias,LimInf,LimSup,Algodao_Farelo_39,Amido,Arroz_Farelo,Arroz_Farelo_Deseng.,Carne_e_Ossos_Farinha_50,Citrus_Polpa,Mandioca_Integral_Raspa,"Milho_7,88",Milho_Farelo_de_Glúten_60,oleo_de_Soja,Soja_Farelo_48,Trigo_Farelo,Lisina_-_HCL,Metionina,Fosfato_BicAlcico,CalcArio_Calcitico,Sal_Comum,Excipiente
+Componente,Unidade,Exigencias,LimInf,LimSup,Algodao_Farelo_39,Amido,Arroz_Farelo,Arroz_Farelo_Deseng,Carne_e_Ossos_Farinha_50,Citrus_Polpa,Mandioca_Integral_Raspa,"Milho_7_88",Milho_Farelo_de_Glúten_60,oleo_de_Soja,Soja_Farelo_48,Trigo_Farelo,Lisina_HCL,Metionina,Fosfato_BicAlcico,CalcArio_Calcitico,Sal_Comum,Excipiente
 Tipo_de_Alimento,-,0,1000000,1000000,1,1,1,1,2,1,1,1,1,1,1,1,4,4,3,3,3,3
 Preco,R$/kg,0,1000000,1000000,"0,56","1,33","0,46","0,49","0,54","0,45","0,24","0,65","0,88","1,12","0,88","0,54","4,43","3,54","2,32","0,12","0,54","0,11"
 Materia_Seca,%,0,1000000,1000000,"89,83","88,5","89,34","89,72","93,95","88,44","87,67","87,48","91,11","99,6","89,18","88,38",100,100,100,100,100,100
