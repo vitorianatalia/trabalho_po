@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <title>Otimização</title>
+</head>
+<body>
+    <h1>Otimização de Componentes para Ração de Ruminantes</h1>
+    
+
+    <form action="/test" method="POST" enctype="multipart/form-data">
+
+      <div class="form-group">
+        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="file">
+        <label for="exampleFormControlFile1" for="file">Selecione o arquivo</label>
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+
+
+
+
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <form id="formid" enctype="multipart/form-data" action="/upload" method="post">
+        <input id="name" type="text" />
+        <input id="data"  type="file" />
+        <button type="submit" name="submit">Submit</button>
+      </form>
+      
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Default file input example</label>
+        <input class="form-control" type="file" id="formFile" onchange="populateFileTable()">
+      </div>
+
+      <table>
+        <tr>
+            <th>File name</th>
+            <th>Size</th>
+            <th>Last update</th>
+        </tr>
+        <tr>
+            <td id="fileName">
+         
+            </td>
+            <td id="fileSize">
+                
+            </td>
+            <td id="lastUpdated">
+                
+            </td>
+        </tr>
+      </table>
+      <input class="btn btn-primary" type="submit" value="Submit">
+
+      <div class="alert alert-success" role="alert">
+        A simple success alert—check it out!
+      </div>
+      <div class="alert alert-danger" role="alert">
+        A simple danger alert—check it out!
+      </div>
+      <button class="btn btn-primary" type="submit">Button</button>
+
+</body>
+</html>
+
+<!-- import external js file -->
+<script src="/scripts.js"></script>

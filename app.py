@@ -1,119 +1,213 @@
-from flask import Flask, jsonify
+import pprint
+from flask import Flask, jsonify, json, request, render_template, redirect
 from solver_v2 import solve_model
+import os
+import urllib.request
 import pandas as pd
 import csv
 import json
+import time
+from flask_cors import CORS, cross_origin
+from werkzeug.utils import secure_filename
+
+
 app = Flask(__name__)
+
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+app.secret_key = "caircocoders-ednalan"
+UPLOAD_FOLDER = 'C:\\Users\\vitor\\Desktop\\trabalho-po\\trabalho-po'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+
+filename = None
+
+ALLOWED_EXTENSIONS = set(['csv'])
+
 
 @app.route('/', methods=['GET'])
 def homepage():
-  pathname = r'C:\\Users\\vitor\\Desktop\\trabalho-po\\trabalho-po\\dados.csv'
-  outpath = r'C:\\Users\\vitor\\Desktop\\trabalho-po\\trabalho-po\\output.json'
-  data = pd.read_csv(pathname, sep=',')
+    pathname = 'C:/Users/vitor/Desktop/trabalho-po/trabalho-po/uploads/' + filename
+    outpath = r'C:\\Users\\vitor\\Desktop\\trabalho-po\\trabalho-po\\output.json'
+    data = pd.read_csv(pathname, sep=',')
 
-  componente = data.Componente
-  unidade = data.Unidade
-  exigencias = data.Exigencias
-  limInf = data.LimInf
-  limSup = data.LimSup
-  algodao = data.Algodao_Farelo_39
-  amido = data.Amido
-  arrozFarelo = data.Arroz_Farelo
-  arrozFareloDeseng = data.Arroz_Farelo_Deseng
-  carneOssos = data.Carne_e_Ossos_Farinha_50
-  polpa = data.Citrus_Polpa
-  mandioca = data.Mandioca_Integral_Raspa
-  milho7 = data.Milho_7_88
-  milhoGluten = data.Milho_Farelo_de_Glúten_60
-  oleoSoja = data.oleo_de_Soja
-  sojaFarelo = data.Soja_Farelo_48
-  trigoFarelo = data.Trigo_Farelo
-  lisina = data.Lisina_HCL
-  metionina = data.Metionina
-  fosfato = data.Fosfato_BicAlcico
-  calcario = data.CalcArio_Calcitico
-  sal = data.Sal_Comum
-  excipiente = data.Excipiente
+    print(data)
+
+    componente = data.Componente
+    unidade = data.Unidade
+    exigencias = data.Exigencias
+    limInf = data.LimInf
+    limSup = data.LimSup
+    algodao = data.Algodao_Farelo_39
+    amido = data.Amido
+    arrozFarelo = data.Arroz_Farelo
+    arrozFareloDeseng = data.Arroz_Farelo_Deseng
+    carneOssos = data.Carne_e_Ossos_Farinha_50
+    polpa = data.Citrus_Polpa
+    mandioca = data.Mandioca_Integral_Raspa
+    milho7 = data.Milho_7_88
+    milhoGluten = data.Milho_Farelo_de_Glúten_60
+    oleoSoja = data.oleo_de_Soja
+    sojaFarelo = data.Soja_Farelo_48
+    trigoFarelo = data.Trigo_Farelo
+    lisina = data.Lisina_HCL
+    metionina = data.Metionina
+    fosfato = data.Fosfato_BicAlcico
+    calcario = data.CalcArio_Calcitico
+    sal = data.Sal_Comum
+    excipiente = data.Excipiente
+
+    algodaoCont = {}
+    amidoCont = {}
+    arrozFareloCont = {}
+    arrozFareloDesengCont = {}
+    carneOssosCont = {}
+    polpaCont = {}
+    mandiocaCont = {}
+    milho7Cont = {}
+    milhoGlutenCont = {}
+    oleoSojaCont = {}
+    sojaFareloCont = {}
+    trigoFareloCont = {}
+    lisinaCont = {}
+    metioninaCont = {}
+    fosfatoCont = {}
+    calcarioCont = {}
+    salCont = {}
+    excipienteCont = {}
+
+    listComponents = []
+    for i in componente:
+        listComponents.append(i)
+
+    x = 0
+    while x < len(sal):
+        algodaoCont.update({listComponents[x]: algodao[x]})
+        amidoCont.update({listComponents[x]: amido[x]})
+        arrozFareloCont.update({listComponents[x]: arrozFarelo[x]})
+        arrozFareloDesengCont.update({listComponents[x]: arrozFareloDeseng[x]})
+        carneOssosCont.update({listComponents[x]: carneOssos[x]})
+        polpaCont.update({listComponents[x]: polpa[x]})
+        mandiocaCont.update({listComponents[x]: mandioca[x]})
+        milho7Cont.update({listComponents[x]: milho7[x]})
+        milhoGlutenCont.update({listComponents[x]: milhoGluten[x]})
+        oleoSojaCont.update({listComponents[x]: oleoSoja[x]})
+        sojaFareloCont.update({listComponents[x]: sojaFarelo[x]})
+        trigoFareloCont.update({listComponents[x]: trigoFarelo[x]})
+        lisinaCont.update({listComponents[x]: lisina[x]})
+        metioninaCont.update({listComponents[x]: metionina[x]})
+        fosfatoCont.update({listComponents[x]: fosfato[x]})
+        calcarioCont.update({listComponents[x]: calcario[x]})
+        salCont.update({listComponents[x]: sal[x]})
+        excipienteCont.update({listComponents[x]: excipiente[x]})
+
+        x = x + 1
+
+    fullList = {
+        "Algodao_Farelo_39": algodaoCont,
+        "Amido": amidoCont,
+        "Arroz_Farelo": arrozFareloCont,
+        "Arroz_Farelo_Deseng": arrozFareloCont,
+        "Carne_e_Ossos_Farinha_50": carneOssosCont,
+        "Citrus_Polpa": polpaCont,
+        "Mandioca_Integral_Raspa": mandiocaCont,
+        "Milho_7,88": milho7Cont,
+        "Milho_Farelo_de_Gluten_60": milhoGlutenCont,
+        "oleo_de_Soja": oleoSojaCont,
+        "Soja_Farelo_48": sojaFareloCont,
+        "Trigo_Farelo": trigoFareloCont,
+        "Lisina_HCL": lisinaCont,
+        "Metionina": metioninaCont,
+        "Fosfato_BicAlcico": fosfatoCont,
+        "CalcArio_Calcitico": calcarioCont,
+        "Sal_Comum": salCont,
+        "Excipiente": excipienteCont
+
+    }
+
+    df = pd.DataFrame(fullList)
+    df.to_json(outpath, indent=4)
+    return fullList
 
 
 
-  algodaoCont = {}
-  amidoCont = {}
-  arrozFareloCont = {}
-  arrozFareloDesengCont = {}
-  carneOssosCont = {}
-  polpaCont = {}
-  mandiocaCont = {}
-  milho7Cont = {}
-  milhoGlutenCont = {}
-  oleoSojaCont = {}
-  sojaFareloCont = {}
-  trigoFareloCont = {}
-  lisinaCont = {}
-  metioninaCont = {}
-  fosfatoCont = {}
-  calcarioCont = {}
-  salCont = {}
-  excipienteCont = {}
+app.config["FILE_UPLOADS"] = "C:/Users/vitor/Desktop/trabalho-po/trabalho-po/uploads"
 
-  
-  listComponents = []
-  for i in componente:
-    listComponents.append(i)
+def allowed_file(filename):
+  return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-  
-  x = 0
-  while x < len (sal):
-    algodaoCont.update({ listComponents[x] : algodao[x]})
-    amidoCont.update({ listComponents[x] : amido[x]})
-    arrozFareloCont.update({ listComponents[x] : arrozFarelo[x] })
-    arrozFareloDesengCont.update({ listComponents[x] : arrozFareloDeseng[x] }) 
-    carneOssosCont.update({ listComponents[x] : carneOssos[x] }) 
-    polpaCont.update({ listComponents[x] : polpa[x] }) 
-    mandiocaCont.update({ listComponents[x] : mandioca[x] }) 
-    milho7Cont.update({ listComponents[x] : milho7[x] }) 
-    milhoGlutenCont.update({ listComponents[x] : milhoGluten[x] }) 
-    oleoSojaCont.update({ listComponents[x] : oleoSoja[x] }) 
-    sojaFareloCont.update({ listComponents[x] : sojaFarelo[x] }) 
-    trigoFareloCont.update({ listComponents[x] : trigoFarelo[x] }) 
-    lisinaCont.update({ listComponents[x] : lisina[x] }) 
-    metioninaCont.update({ listComponents[x] : metionina[x] }) 
-    fosfatoCont.update({ listComponents[x] : fosfato[x] }) 
-    calcarioCont.update({ listComponents[x] : calcario[x] }) 
-    salCont.update({ listComponents[x] : sal[x] }) 
-    excipienteCont.update({ listComponents[x] : excipiente[x] }) 
-
-    x = x + 1
-
-  fullList = {
-    "Algodao" : algodaoCont,
-    "Amido" : amidoCont,
-    "Arroz_Farelo" : arrozFareloCont,
-    "Arroz_Farelo_Deseng" : arrozFareloCont,
-    "Carne_e_Ossos_Farinha_50" : carneOssosCont,
-    "Citrus_Polpa" : polpaCont,
-    "Mandioca_Integral_Raspa" : mandiocaCont, 
-    "Milho_7,88" : milho7Cont,
-    "Milho_Farelo_de_Gluten_60" : milhoGlutenCont,
-    "oleo_de_Soja" : oleoSojaCont,
-    "Soja_Farelo_48" : sojaFareloCont,
-    "Trigo_Farelo" : trigoFareloCont,
-    "Lisina_HCL" : lisinaCont,
-    "Metionina" : metioninaCont,
-    "Fosfato_BicAlcico" : fosfatoCont,
-    "CalcArio_Calcitico" : calcarioCont,
-    "Sal_Comum" : salCont,
-    "Excipiente" : excipienteCont
-  
-  }
-
-  df = pd.DataFrame(fullList, index=[0])
-  df.to_json(outpath, indent=4)
-  return fullList
-
-@app.route('/test')
+@app.route('/test', methods=['GET', 'POST'])
 def test():
-    return 'test'
+  global filename
+  if request.method == 'POST':
+
+    if request.files:
+
+        file = request.files['file']
+
+        if file.filename == '':
+            print('File must have a filename')
+            return redirect(request.url)
+
+        if not allowed_file(file.filename):
+            print('Filetype not allowed')
+            return redirect(request.url)
+
+        file.save(os.path.join(app.config['FILE_UPLOADS'], file.filename))
+        filename = file.filename
+        print("File uploaded")
+        homepage()
+        return redirect("/")
+
+        return redirect(request.url)
+
+  return render_template('index.html')
+
+
+
+
+
+
+
+
+
+# @app.route('/upload', methods=['POST'])
+# def upload_file():
+#   global filename
+
+# # heck if the post request has the file part
+#   if 'files[]' not in request.files:
+#       resp = jsonify({'message' : 'No file part in the request'})
+#       resp.status_code = 400
+#       return resp
+
+#   files = request.files.getlist('files[]')
+#   errors = {}
+#   success = False
+
+#   for file in files: 
+#     file.save(os.path.join(os.getcwd(), 'temp.csv'))
+#     filename = secure_filename(file.filename)
+#     if file and allowed_file(file.filename):
+#       file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#       success = True
+#     else:
+#       errors[file.filename] = 'File type is not allowed'
+
+#   if success and errors:
+#     errors['message'] = filename + 'successfully uploaded'
+#     resp = jsonify(errors)
+#     resp.status_code = 500
+#     return resp
+#   if success: 
+#     resp = jsonify({'message' : filename + ' successfully uploaded'})
+#     resp.status_code = 201
+#     return resp
+#   else:
+#     resp = jsonify(errors)
+#     resp.status_code = 500
+#     return resp
 
 if __name__ == '__main__':
     app.run(port=3001)
