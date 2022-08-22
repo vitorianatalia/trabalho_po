@@ -1,24 +1,15 @@
-import pprint
-from flask import Flask, jsonify, json, request, render_template, redirect
-from solver_v2 import solve_model
 import os
-import urllib.request
 import pandas as pd
-import csv
-import json
-import time
+from site import abs_paths
+from flask import Flask, request, render_template, redirect
+from solver_v2 import solve_model
+from fpdf import FPDF
 from flask_cors import CORS, cross_origin
-from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
 
 cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
-app.secret_key = "caircocoders-ednalan"
-UPLOAD_FOLDER = 'C:\\Users\\vitor\\Desktop\\trabalho-po\\trabalho-po'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 
 filename = None
@@ -28,8 +19,9 @@ ALLOWED_EXTENSIONS = set(['csv'])
 
 @app.route('/', methods=['GET'])
 def homepage():
-    pathname = 'C:/Users/vitor/Desktop/trabalho-po/trabalho-po/uploads/' + filename
-    outpath = r'C:\\Users\\vitor\\Desktop\\trabalho-po\\trabalho-po\\output.json'
+    pathname = os.path.abspath("trabalho_po_backend/uploads/" + filename).replace("trabalho_po_backend", "", 1)
+    print(pathname)
+    outpath = os.path.abspath('trabalho_po_backend/output.json').replace("trabalho_po_backend", "", 1)
     data = pd.read_csv(pathname, sep=',')
 
     print(data)
@@ -128,11 +120,15 @@ def homepage():
 
     df = pd.DataFrame(fullList)
     df.to_json(outpath, indent=4)
+    solve_model(fullList)
     return fullList
 
 
 
-app.config["FILE_UPLOADS"] = "C:/Users/vitor/Desktop/trabalho-po/trabalho-po/uploads"
+app.config["FILE_UPLOADS"] = os.path.abspath("trabalho_po_backend/uploads").replace("trabalho_po_backend", "", 1)
+
+print(app.config["FILE_UPLOADS"])
+
 
 def allowed_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -160,54 +156,18 @@ def test():
         homepage()
         return redirect("/")
 
-        return redirect(request.url)
-
   return render_template('index.html')
 
+def generatePdf():
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size = 15)
+    pdf.cell(200, 0, txt = "Testando, esse é meu primeiro PDF usando FPDF", ln = 2, align = 'c' )
+
+    pdf.output("output.pdf")
 
 
 
-
-
-
-
-
-# @app.route('/upload', methods=['POST'])
-# def upload_file():
-#   global filename
-
-# # heck if the post request has the file part
-#   if 'files[]' not in request.files:
-#       resp = jsonify({'message' : 'No file part in the request'})
-#       resp.status_code = 400
-#       return resp
-
-#   files = request.files.getlist('files[]')
-#   errors = {}
-#   success = False
-
-#   for file in files: 
-#     file.save(os.path.join(os.getcwd(), 'temp.csv'))
-#     filename = secure_filename(file.filename)
-#     if file and allowed_file(file.filename):
-#       file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#       success = True
-#     else:
-#       errors[file.filename] = 'File type is not allowed'
-
-#   if success and errors:
-#     errors['message'] = filename + 'successfully uploaded'
-#     resp = jsonify(errors)
-#     resp.status_code = 500
-#     return resp
-#   if success: 
-#     resp = jsonify({'message' : filename + ' successfully uploaded'})
-#     resp.status_code = 201
-#     return resp
-#   else:
-#     resp = jsonify(errors)
-#     resp.status_code = 500
-#     return resp
 
 if __name__ == '__main__':
     app.run(port=3001)

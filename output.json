@@ -680,7 +680,7 @@
         "Quantidade":"0"
     },
     "Soja_Farelo_48":{
-        "Tipo_de_Alimento":"9",
+        "Tipo_de_Alimento":"1",
         "Preco":"0,88",
         "Materia_Seca":"89,18",
         "Energia_Bruta":"48,1",
@@ -1156,7 +1156,7 @@
         "Quantidade":"0"
     },
     "Excipiente":{
-        "Tipo_de_Alimento":"9",
+        "Tipo_de_Alimento":"3",
         "Preco":"0,11",
         "Materia_Seca":"100",
         "Energia_Bruta":"0",
