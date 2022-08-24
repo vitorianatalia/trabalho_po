@@ -1,4 +1,72 @@
 {
+    "Exigencias":{
+        "Tipo_de_Alimento":"0",
+        "Preco":"0",
+        "Materia_Seca":"0",
+        "Energia_Bruta":"0",
+        "Energia_Met_Aves":"0",
+        "Energia_Met_Galinhas":"0",
+        "Energia_Met_Verd_Aves":"2950",
+        "Proteina_Bruta":"19,8",
+        "Coef_Dig_PB_Aves":"0",
+        "PB_Digestivel_Aves":"0",
+        "Lisina_Dig_":"1,131",
+        "Metionina_Dig_":"0,452",
+        "Met_Cis_Dig_":"0,826",
+        "Treonina_Dig_":"0,735",
+        "Triptofano_Dig_":"0,204",
+        "Arginina_Dig_":"1,221",
+        "Gli_Ser_Dig_":"1,515",
+        "Valina_Dig_":"0,882",
+        "Isoleucina_Dig_":"0,769",
+        "Leucina_Dig_":"1,221",
+        "Histidina_Dig_":"0,418",
+        "Fenilalanina_Dig_":"0,713",
+        "Fen_Tir_Dig_":"1,301",
+        "Gordura":"0",
+        "Coef_Dig_Gordura_Aves":"0",
+        "Gordura_Dig_Aves":"0",
+        "Acido_Linoleico":"1,04",
+        "Acido_Linolenico":"0",
+        "Amido":"0",
+        "Fibra_Bruta":"0",
+        "FDN":"0",
+        "FDA":"0",
+        "Ext_Nao_Nitrogenado":"0",
+        "Coef_Dig_ENN_Aves":"0",
+        "ENN_Dig_Ave":"0",
+        "ENN_Nao_Dig__FB_Aves":"0",
+        "Materia_Org\u00e2nica":"0",
+        "Materia_Mineral":"0",
+        "Ca":"0,758",
+        "P_total":"0",
+        "P_fit_":"0",
+        "P_disp_":"0,354",
+        "P_dig_":"0",
+        "Sodio":"0,2",
+        "Cloro":"0,18",
+        "Potassio":"0,58",
+        "Magnesio":"0",
+        "Enxofre":"0",
+        "Cobalto":"0",
+        "Cobre":"11",
+        "Ferro":"55",
+        "Ioso":"1,1",
+        "Manganes":"77",
+        "Selenio":"0,33",
+        "Zinco":"71,5",
+        "Vitamina_A":"0",
+        "Vitamina_D":"0",
+        "Vitamina_E":"0",
+        "Vitamina_K":"0",
+        "Vitamina_B":"0",
+        "Ac_Nicotinico":"0",
+        "Ac_Pantotenico":"0",
+        "Acido_Folico":"0",
+        "Biotina":"0",
+        "Colina":"0",
+        "Quantidade":"0"
+    },
     "Algodao_Farelo_39":{
         "Tipo_de_Alimento":"1",
         "Preco":"0,56",
@@ -65,7 +133,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Amido":{
         "Tipo_de_Alimento":"1",
@@ -133,7 +201,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Arroz_Farelo":{
         "Tipo_de_Alimento":"1",
@@ -201,7 +269,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Arroz_Farelo_Deseng":{
         "Tipo_de_Alimento":"1",
@@ -269,7 +337,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Carne_e_Ossos_Farinha_50":{
         "Tipo_de_Alimento":"2",
@@ -337,7 +405,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Citrus_Polpa":{
         "Tipo_de_Alimento":"1",
@@ -405,7 +473,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Mandioca_Integral_Raspa":{
         "Tipo_de_Alimento":"1",
@@ -473,7 +541,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Milho_7,88":{
         "Tipo_de_Alimento":"1",
@@ -541,7 +609,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Milho_Farelo_de_Gluten_60":{
         "Tipo_de_Alimento":"1",
@@ -609,7 +677,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "oleo_de_Soja":{
         "Tipo_de_Alimento":"1",
@@ -677,7 +745,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Soja_Farelo_48":{
         "Tipo_de_Alimento":"1",
@@ -745,7 +813,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Trigo_Farelo":{
         "Tipo_de_Alimento":"1",
@@ -813,7 +881,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Lisina_HCL":{
         "Tipo_de_Alimento":"4",
@@ -881,7 +949,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Metionina":{
         "Tipo_de_Alimento":"4",
@@ -949,7 +1017,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Fosfato_BicAlcico":{
         "Tipo_de_Alimento":"3",
@@ -1017,7 +1085,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "CalcArio_Calcitico":{
         "Tipo_de_Alimento":"3",
@@ -1085,7 +1153,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Sal_Comum":{
         "Tipo_de_Alimento":"3",
@@ -1153,7 +1221,7 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     },
     "Excipiente":{
         "Tipo_de_Alimento":"3",
@@ -1221,6 +1289,6 @@
         "Acido_Folico":"0",
         "Biotina":"0",
         "Colina":"0",
-        "Quantidade":"0"
+        "Quantidade":"1"
     }
 }

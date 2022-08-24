@@ -50,6 +50,7 @@ def homepage():
     sal = data.Sal_Comum
     excipiente = data.Excipiente
 
+    exigenciasCont = {}
     algodaoCont = {}
     amidoCont = {}
     arrozFareloCont = {}
@@ -75,6 +76,7 @@ def homepage():
 
     x = 0
     while x < len(sal):
+        exigenciasCont.update({listComponents[x]: exigencias[x]})
         algodaoCont.update({listComponents[x]: algodao[x]})
         amidoCont.update({listComponents[x]: amido[x]})
         arrozFareloCont.update({listComponents[x]: arrozFarelo[x]})
@@ -97,6 +99,7 @@ def homepage():
         x = x + 1
 
     fullList = {
+        "Exigencias": exigenciasCont,
         "Algodao_Farelo_39": algodaoCont,
         "Amido": amidoCont,
         "Arroz_Farelo": arrozFareloCont,
