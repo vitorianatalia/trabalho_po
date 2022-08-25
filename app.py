@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from site import abs_paths
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, send_file
 from solver_v2 import solve_model
 from fpdf import FPDF
 from flask_cors import CORS, cross_origin
@@ -17,20 +17,16 @@ filename = None
 ALLOWED_EXTENSIONS = set(['csv'])
 
 
-@app.route('/', methods=['GET'])
-def homepage():
+@app.route('/solver', methods=['GET'])
+def fileHandler():
     pathname = os.path.abspath("trabalho_po_backend/uploads/" + filename).replace("trabalho_po_backend", "", 1)
-    print(pathname)
     outpath = os.path.abspath('trabalho_po_backend/output.json').replace("trabalho_po_backend", "", 1)
     data = pd.read_csv(pathname, sep=',')
 
-    print(data)
+    # print(data)
 
     componente = data.Componente
-    unidade = data.Unidade
     exigencias = data.Exigencias
-    limInf = data.LimInf
-    limSup = data.LimSup
     algodao = data.Algodao_Farelo_39
     amido = data.Amido
     arrozFarelo = data.Arroz_Farelo
@@ -103,7 +99,7 @@ def homepage():
         "Algodao_Farelo_39": algodaoCont,
         "Amido": amidoCont,
         "Arroz_Farelo": arrozFareloCont,
-        "Arroz_Farelo_Deseng": arrozFareloCont,
+        "Arroz_Farelo_Deseng": arrozFareloDesengCont,
         "Carne_e_Ossos_Farinha_50": carneOssosCont,
         "Citrus_Polpa": polpaCont,
         "Mandioca_Integral_Raspa": mandiocaCont,
@@ -127,17 +123,13 @@ def homepage():
     return fullList
 
 
-
 app.config["FILE_UPLOADS"] = os.path.abspath("trabalho_po_backend/uploads").replace("trabalho_po_backend", "", 1)
-
-print(app.config["FILE_UPLOADS"])
-
 
 def allowed_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/test', methods=['GET', 'POST'])
-def test():
+@app.route('/', methods=['GET', 'POST'])
+def home():
   global filename
   if request.method == 'POST':
 
@@ -156,8 +148,8 @@ def test():
         file.save(os.path.join(app.config['FILE_UPLOADS'], file.filename))
         filename = file.filename
         print("File uploaded")
-        homepage()
-        return redirect("/")
+        fileHandler()
+        return render_template('index2.html')
 
   return render_template('index.html')
 
@@ -169,7 +161,11 @@ def generatePdf():
 
     pdf.output("output.pdf")
 
-
+# @app.route('/download')
+# def downloadFile ():
+#     #For windows you need to use drive name [ex: F:/Example.pdf]
+#     path = "D:\Users\vitor\OneDrive\Documentos\GitHub\trabalho_po_backend\file_out.txt"
+#     return send_file(path, as_attachment=True)
 
 
 if __name__ == '__main__':

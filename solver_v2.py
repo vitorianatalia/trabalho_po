@@ -1,91 +1,75 @@
 from pyomo.core.base.PyomoModel import ConcreteModel
 from pyomo.core.base.objective import Objective
-from pyomo.environ import * 
+from pyomo.environ import *
+import sys
 
 
 def solve_model(tabela):
     model = ConcreteModel()
         
-    #variaveis
+    #writes to txt
+    f = open('file_out.txt', 'w+')
+    f.truncate()
+    sys.stdout = f
 
+    #variaveis
     items = list(range(len(tabela)))
     model.x = Var(items, within = NonNegativeReals)
 
+    #objetivo
     objFun = 0
     i = 0
     for key in tabela:
-        floatPrice = tabela[key]['Preco'].replace(',', ".")
-        objFun = objFun + float(floatPrice) * model.x[i]
-        print(tabela[key]["Preco"])
+        if key != 'Exigencias':
+            floatPrice = tabela[key]['Preco'].replace(',', ".")
+            objFun = objFun + float(floatPrice) * model.x[i]
         i+=1
-        
-    print(objFun)
-    
-    #objetivo
+
     model.obj = Objective(expr = objFun, sense = minimize) 
 
     #restricoes
     model.constrs = ConstraintList()
 
     constraints = []
-    #print('Len tabela: ' + str(len(tabela['Exigencias'])))
-    #j = 0
-
     listComponents = []
     for key in tabela['Algodao_Farelo_39']:
         listComponents.append(key)
-    
 
-    #print ("LEN TABELA: " + str(len(tabela)))
-    j=0
-    while j < len(tabela['Exigencias']):
+    j = i = 0
+    while i < len(listComponents):
         aux = 0
-        print('Tabela keys' + str(len(tabela.keys())))
+        j = 0
         for key in tabela.keys():
-            #essa linha ta errada, por algum motivo o len(tabela.keys) é 19 e nao 69 como deveriamos ter
-            #no caso, deveriamos ter 69 restrições, nao 19
-            # print (key + ' : ' + listComponents[j] + ' : ' + str(tabela[key][listComponents[j]]))
-            aux = aux + float(tabela[key][listComponents[j]].replace(',', ".")) * model.x[j]
-        j+=1
+            if key != 'Exigencias':   
+                aux = aux + float(tabela[key][listComponents[i]].replace(',', ".")) * model.x[j]
+                j+=1
+            
+        i+=1
         constraints.append(aux)
-
-    print('Constraints: ' + str(len(constraints)))
     
     listExigencias = []
     for key in tabela['Exigencias']:
-        aux = float(tabela['Exigencias'][key].replace(',', "."))
-        listExigencias.append(aux)
-    
-    i = 0
-    for i in range(len(listExigencias)):
-        print(listExigencias[i])
-
-    print("Lista de exigencias: " + str(len(listExigencias)))
-    print("Tamanho Exigencias: " + str(len(tabela['Exigencias'])))
+        if key != 'Exigencias':
+            aux = float(tabela['Exigencias'][key].replace(',', "."))
+            listExigencias.append(aux)
 
     i = 0
-    while i < len(tabela['Exigencias']):
-        #print (constraints[i] + '\n')
-        tableLen = len(tabela['Exigencias'])
-        if i != tableLen - 1:
+    while i < len(listExigencias) -1:
+        if (type(constraints[i]) != int):
             model.constrs.add(expr = constraints[i] >= listExigencias[i])
-        else:
-            model.constrs.add(expr = constraints[i] == 1)
-        print(i)
-        #print("Constrains: ", model.constrs[i].expr)
         i+=1
 
-    model.pprint()
-    # model.constrs.add(expr = model.x[0] <= 4)
-    # model.constrs.add(expr = 2 * model.x[1] <= 12)
-    # model.constrs.add(expr = 3 * model.x[0] + 2* model.x[1] <= 18)
+    #GLPK
+    model.constrs.pprint()
     optimizer = SolverFactory('glpk')
     results = optimizer.solve(model, tee = False)
 
+
+    #print model
     cost = model.obj.expr()
     print("Valor: ", cost)
 
-    for i in range(len(constraints)):
+    for i in range(len(tabela)):
         x_value = model.x[i].value
         print("x", i, " = ", x_value)
 
@@ -96,6 +80,8 @@ def solve_model(tabela):
     termination = results.solver.termination_condition
     print("Criterio de Parada: ", termination) 
 
+    model.pprint()
+    f.close()
 
 
 
