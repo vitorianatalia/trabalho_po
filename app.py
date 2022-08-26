@@ -160,7 +160,7 @@ def generatePdf():
     pdf.set_margins(0,0,0)
     for x in f:
         pdf.cell(1, 10, txt = x, ln = 1, align = 'l' )
-    pdf.output("output.pdf")
+    pdf.output("Resultado.pdf")
 
 generatePdf()
 
