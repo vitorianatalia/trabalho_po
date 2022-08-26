@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\vitor\Desktop\trabalho-po\trabalho-po"
+VIRTUAL_ENV="D:\Users\allan\OneDrive\Documentos\GitHub\trabalho_po_backend\ven"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -55,9 +55,9 @@ fi
 
 if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ] ; then
     _OLD_VIRTUAL_PS1="${PS1:-}"
-    PS1="(trabalho-po) ${PS1:-}"
+    PS1="(ven) ${PS1:-}"
     export PS1
-    VIRTUAL_ENV_PROMPT="(trabalho-po) "
+    VIRTUAL_ENV_PROMPT="(ven) "
     export VIRTUAL_ENV_PROMPT
 fi
 
