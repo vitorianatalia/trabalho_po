@@ -1,11 +1,9 @@
 import os
 import pandas as pd
-from site import abs_paths
-from flask import Flask, request, render_template, redirect, send_file, current_app
+from flask import Flask, request, render_template, redirect, send_file
 from solver_v2 import solve_model
 from fpdf import FPDF
-from flask_cors import CORS, cross_origin
-from solver_v2 import openFile
+from flask_cors import CORS
 
 
 app = Flask(__name__)
