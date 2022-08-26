@@ -1,10 +1,11 @@
 import os
 import pandas as pd
 from site import abs_paths
-from flask import Flask, request, render_template, redirect, send_file
+from flask import Flask, request, render_template, redirect, send_file, current_app
 from solver_v2 import solve_model
 from fpdf import FPDF
 from flask_cors import CORS, cross_origin
+from solver_v2 import openFile
 
 
 app = Flask(__name__)
@@ -20,7 +21,6 @@ ALLOWED_EXTENSIONS = set(['csv'])
 @app.route('/solver', methods=['GET'])
 def fileHandler():
     pathname = os.path.abspath("trabalho_po_backend/uploads/" + filename).replace("trabalho_po_backend", "", 1)
-    outpath = os.path.abspath('trabalho_po_backend/output.json').replace("trabalho_po_backend", "", 1)
     data = pd.read_csv(pathname, sep=',')
 
     # print(data)
@@ -118,7 +118,6 @@ def fileHandler():
     }
 
     df = pd.DataFrame(fullList)
-    df.to_json(outpath, indent=4)
     solve_model(fullList)
     return fullList
 
@@ -147,26 +146,32 @@ def home():
 
         file.save(os.path.join(app.config['FILE_UPLOADS'], file.filename))
         filename = file.filename
-        print("File uploaded")
+        #print("File uploaded")
         fileHandler()
-        return render_template('index2.html')
+        return render_template('download.html')
 
   return render_template('index.html')
 
 def generatePdf():
     pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size = 15)
-    pdf.cell(200, 0, txt = "Testando, esse é meu primeiro PDF usando FPDF", ln = 2, align = 'c' )
-
+    pdf.add_page(orientation='L')
+    pdf.set_font("Arial", size = 7)
+    f = open("file_out.txt", "r")
+    pdf.set_margins(0,0,0)
+    for x in f:
+        pdf.cell(1, 10, txt = x, ln = 1, align = 'l' )
     pdf.output("output.pdf")
 
-# @app.route('/download')
-# def downloadFile ():
-#     #For windows you need to use drive name [ex: F:/Example.pdf]
-#     path = "D:\Users\vitor\OneDrive\Documentos\GitHub\trabalho_po_backend\file_out.txt"
-#     return send_file(path, as_attachment=True)
+generatePdf()
 
+@app.route('/return-file/')
+def return_file():
+    path = os.path.abspath('trabalho_po_backend/output.pdf').replace("trabalho_po_backend", "", 1)
+    return send_file(path)
+
+@app.route('/download/')
+def download():
+    return render_template('download.html')
 
 if __name__ == '__main__':
     app.run(port=3001)

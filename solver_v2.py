@@ -4,11 +4,18 @@ from pyomo.environ import *
 import sys
 
 
+def openFile():
+    return open('file_out.txt', 'w+')
+   
+def closeFile(file):
+    file.close()
+
 def solve_model(tabela):
+
+    f = openFile()
     model = ConcreteModel()
         
     #writes to txt
-    f = open('file_out.txt', 'w+')
     f.truncate()
     sys.stdout = f
 
@@ -81,7 +88,7 @@ def solve_model(tabela):
     print("Criterio de Parada: ", termination) 
 
     model.pprint()
-    f.close()
 
+    closeFile(f)
 
 
