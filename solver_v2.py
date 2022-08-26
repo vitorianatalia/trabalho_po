@@ -30,7 +30,7 @@ def solve_model(tabela):
         if key != 'Exigencias':
             floatPrice = tabela[key]['Preco'].replace(',', ".")
             objFun = objFun + float(floatPrice) * model.x[i]
-        i+=1
+            i+=1
 
     model.obj = Objective(expr = objFun, sense = minimize) 
 
@@ -42,26 +42,32 @@ def solve_model(tabela):
     for key in tabela['Algodao_Farelo_39']:
         listComponents.append(key)
 
-    j = i = 0
+    i = 0
     while i < len(listComponents):
         aux = 0
         j = 0
         for key in tabela.keys():
-            if key != 'Exigencias':   
+            if key != 'Exigencias' and listComponents[i] != 'Preco' and listComponents[i] != 'Tipo_de_Alimento':
                 aux = aux + float(tabela[key][listComponents[i]].replace(',', ".")) * model.x[j]
                 j+=1
             
         i+=1
         constraints.append(aux)
+
     
     listExigencias = []
     for key in tabela['Exigencias']:
-        if key != 'Exigencias':
+        if key != 'Preco':
             aux = float(tabela['Exigencias'][key].replace(',', "."))
             listExigencias.append(aux)
+        # print('##')
+        # print(listExigencias)
 
     i = 0
-    while i < len(listExigencias) -1:
+    while i < len(listExigencias) - 1:
+        # print(constraints[i])
+        # print('###')
+        # print(listExigencias[i])
         if (type(constraints[i]) != int):
             model.constrs.add(expr = constraints[i] >= listExigencias[i])
         i+=1

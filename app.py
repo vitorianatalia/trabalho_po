@@ -164,7 +164,7 @@ generatePdf()
 
 @app.route('/return-file/')
 def return_file():
-    path = os.path.abspath('trabalho_po_backend/output.pdf').replace("trabalho_po_backend", "", 1)
+    path = os.path.abspath('trabalho_po_backend/Resultado.pdf').replace("trabalho_po_backend", "", 1)
     return send_file(path)
 
 @app.route('/download/')
